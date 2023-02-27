@@ -46,3 +46,12 @@ for I := 0 to center-1 by 1
     disp_message (WindowID, Area[I], 'window', Row[I] - TxtHeight / 2, Column[I] - TxtWidth / 2, 'white', 'true')
 endfor
 
+
+
+// 计算区域内总灰度值以及中心的行、列坐标
+* 创建矩形区域
+gen_rectangle1 (ROI_0, 42.5737, 70.9316, 65.8302, 114.433)
+
+* 计算区域内总灰度值以及中心的行、列坐标
+area_center_gray (ROI_0, GrayImage, Area, Row, Column)
+

@@ -11,6 +11,8 @@ fft_generic(ImageConvol,ImageResult,'from_freq',1,'none','dc_center','byte')
 dev_display (ImageResult)
 
 
+
+
 /***********************************低通滤波***************************/
 *获得一个低通滤波模型
 gen_lowpass (ImageLowpass, 0.1, 'none', 'dc_center', Width, Height)
