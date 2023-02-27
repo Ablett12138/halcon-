@@ -30,3 +30,6 @@ dev_set_draw ('margin')
 //设置线宽
 dev_set_line_width (2)
 
+*输出伪彩色图像
+dev_set_lut ('temperature')
+
