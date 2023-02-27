@@ -122,6 +122,3 @@ dev_display (Image)
 dev_set_color ('red')
 *显示边缘框架
 dev_display (Skeleton)
-
-
-

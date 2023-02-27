@@ -69,6 +69,3 @@ scale_image (GrayImage, ImageScaled, 1, 100)
 dev_display (ImageInvert)
 dev_display (ImageEmphasize)
 dev_display (ImageScaled)
-
-
-
