@@ -9,10 +9,32 @@ watersheds_threshold (ImageInvert, Basins1,70)
 
 
 /*************************************Hough变换**********************/
-// 进行Hough变换
+*获得目标区域图像
+rectangle1_domain (Image, ImageReduced, 170, 280, 310, 360)
+* 用Sobel边缘检测算子提取边缘
+sobel_dir (ImageReduced, EdgeAmplitude, EdgeDirection, 'sum_abs', 3)
+*设置输出颜色为红色
+dev_set_color ('red')
+*阈值分割得到图像
+threshold (EdgeAmplitude, Region, 55, 255)
+* 截取图像
+reduce_domain (EdgeDirection, Region, EdgeDirectionReduced)
+* 进行Hough变换
 hough_lines_dir (EdgeDirectionReduced, HoughImage, Lines, 4, 2, 'mean', 3, 25, 5, 5, 'true', Angle, Dist)
-//将霍夫变换提取直线以普通形式描述的输入行存储为区域
+*将霍夫变换提取直线以普通形式描述的输入行存储为区域
 gen_region_hline (LinesHNF, Angle, Dist)
+*显示图像
+dev_display (Image)
+*设置输出颜色数目
+dev_set_colored (12)
+*设置输出填充方式为“轮廓”
+dev_set_draw ('margin')
+*显示LinesHNF
+dev_display (LinesHNF) 
+*设置输出填充方式为“填充”
+dev_set_draw ('fill')
+*显示Lines
+dev_display (Lines)
 
 
 /*************************************区域生长算法**********************/
@@ -109,7 +131,7 @@ threshold (Image, Region, MinThresh[0], MaxThresh[0])
 dev_display (Region)
 
 
-/***********************************sobel斯算子***************************/
+/***********************************sobel算子***************************/
 *边缘检测
 sobel_amp (Image, EdgeAmplitude, 'sum_abs', 3)
 *阈值分割
