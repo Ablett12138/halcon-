@@ -32,7 +32,7 @@ dev_display (RegionClosing1)
 dev_display (RegionClosing2)
 
 
-/**********************击中与击不中代码**********************/
+/**********************击中与击不中代码---区域操作**********************/
 threshold (GrayImage, Regions, 0, 44)
 *connection (Regions, ConnectedRegions)
 *skeleton (ConnectedRegions, Skeleton)
