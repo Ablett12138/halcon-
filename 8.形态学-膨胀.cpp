@@ -14,3 +14,6 @@ dilation2 (Regions, Ellipse, RegionDilation3, 0, 0, 1)
 
 
 
+/**********************灰度膨胀**********************/
+*对灰度图像进行膨胀操作
+gray_dilation_shape (Image, ImageMax, 5, 5, 'octagon')

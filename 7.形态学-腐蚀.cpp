@@ -15,3 +15,8 @@ erosion1 (Regions, Ellipse, RegionErosion2, 1)
 erosion2 (Regions, Ellipse, RegionErosion3, 50, 50, 1)
 
 
+
+
+/**********************灰度腐蚀******************************/
+*对灰度图像进行腐蚀操作
+gray_erosion_shape (Image, ImageMin, 5, 5, 'octagon')

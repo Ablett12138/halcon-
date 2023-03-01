@@ -33,9 +33,29 @@ dev_display (RegionClosing2)
 
 
 /**********************击中与击不中代码**********************/
+threshold (GrayImage, Regions, 0, 44)
+*connection (Regions, ConnectedRegions)
+*skeleton (ConnectedRegions, Skeleton)
+*pruning (Skeleton, RegionPrune, 1)
+*fill_up (RegionPrune, RegionFillUp)
+*select_shape (RegionFillUp, SelectedRegions, 'area', 'and', 200, 99999)
+
+dev_display (Image)
+*dev_display (SelectedRegions)
+
+smallest_rectangle1 (Regions, Row1, Column1, Row2, Column2)
+
+gen_rectangle1 (Rectangle, Row1, Column1, Row2, Column2)
+
+gen_circle (Circle, Row1, Column1, 1)
+gen_circle (Circle2, Row2, Column2, 2)
+
+hit_or_miss (Regions, Circle, Circle2, RegionHitMiss, Row1, Column1)
 
 
-
-
-
+/**********************灰度开运算与闭运算**********************/
+*对灰度图像进行开运算操作
+gray_opening_shape (Image, ImageOpening, 5, 5, 'octagon')
+*对灰度图像进行闭运算操作
+gray_closing_shape (Image, ImageClosing, 5, 5, 'octagon')
 
