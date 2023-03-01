@@ -20,3 +20,12 @@ erosion2 (Regions, Ellipse, RegionErosion3, 50, 50, 1)
 /**********************灰度腐蚀******************************/
 *对灰度图像进行腐蚀操作
 gray_erosion_shape (Image, ImageMin, 5, 5, 'octagon')
+
+
+
+
+/***********************边界提取的概念---基于腐蚀***************/
+*将图像二值化
+threshold (Image76, Regions, 76, 255)
+*边界提取
+boundary (Regions, RegionBorder, 'inner')
