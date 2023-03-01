@@ -1,4 +1,4 @@
-/***************************************************二维码矫正*********************************************/
+/**********************     *****************************二维码矫正*********************************************/
 dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)
 dev_set_color ('red')
 dev_set_line_width (2)
@@ -11,7 +11,7 @@ hom_vector_to_proj_hom_mat2d (X, Y, [1,1,1,1], [75,360,360,75], [110,110,360,360
 projective_trans_image (Image, Image_rectified, HomMat2D, 'bilinear', 'false', 'false')
 
 
-/***************************************************仿射变换--位姿变换*********************************************/
+/**********************     *****************************仿射变换--位姿变换*********************************************/
 threshold (GrayImage, Regions, 200, 255)
 area_center (Regions, Area, Row, Column)
 hom_mat2d_identity (HomMat2DIdentity)
@@ -23,7 +23,7 @@ hom_mat2d_scale (HomMat2DIdentity, 1.5, 1.5, Height/2, Width/2, HomMat2DScale)
 affine_trans_image (ImageAffinTrans1, ImageAffinTrans2, HomMat2DScale, 'constant', 'false')
 
 
-/***************************************************图形放大--ROI分割*********************************************/
+/**********************     *****************************图形放大--ROI分割*********************************************/
 read_image (Clip, 'clip')
 *把一个图像缩放到指定比例大小
 zoom_image_factor (Clip, ImageZoomed, 0.5, 0.5, 'constant')

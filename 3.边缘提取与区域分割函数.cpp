@@ -1,4 +1,4 @@
-/**************************************分水岭算法**********************/
+/**********************     分水岭算法     **********************/
 //对单通道图像进行高斯平滑处理，去除噪声
 gauss_filter (Br2, ImageGauss, 3)
 //将图像颜色进行反转
@@ -8,7 +8,7 @@ watersheds (ImageInvert, Basins, Watersheds)
 watersheds_threshold (ImageInvert, Basins1,70)
 
 
-/*************************************Hough变换**********************/
+/**********************     Hough变换     **********************/
 *获得目标区域图像
 rectangle1_domain (Image, ImageReduced, 170, 280, 310, 360)
 * 用Sobel边缘检测算子提取边缘
@@ -27,17 +27,17 @@ gen_region_hline (LinesHNF, Angle, Dist)
 dev_display (Image)
 *设置输出颜色数目
 dev_set_colored (12)
-*设置输出填充方式为“轮廓”
+*设置输出填充方式为"轮廓"
 dev_set_draw ('margin')
 *显示LinesHNF
 dev_display (LinesHNF) 
-*设置输出填充方式为“填充”
+*设置输出填充方式为"填充"
 dev_set_draw ('fill')
 *显示Lines
 dev_display (Lines)
 
 
-/*************************************区域生长算法**********************/
+/**********************     区域生长算法     **********************/
 //对图像进行均值处理，选用circle类型的中值滤波器
 median_image (Image, ImageMedian, 'circle', 2, 'mirrored')
 //使用regiongrowing算子寻找颜色相近的邻域
@@ -51,7 +51,7 @@ area_center (SingleCenters, Area, Row, Column)
 regiongrowing_mean (ImageMedian, RegionsMean, Row, Column, 25, 100)
 
 
-/*************************************亚像素区域提取*************************/
+/**********************     亚像素区域提取     *************************/
 
 // 对图像进行亚像素区域提取
 edges_sub_pix (Image, Edges, 'canny', 2, 12, 22)
@@ -59,7 +59,7 @@ edges_sub_pix (Image, Edges, 'canny', 2, 12, 22)
 dev_set_part (160, 250, 210, 300)
 dev_display (Edges)
 
-/***********************************canny算法**************************/
+/**********************     canny算法      **************************/
 //使用canny算法进行边缘提取
 edges_image (Image, ImaAmp, ImaDir, 'lanser2', 0.5, 'nms', 12, 22)
 //阈值分割
@@ -73,7 +73,7 @@ dev_display (Contours)
 
 
 
-/***********************************kirsch算子边缘检测***************************/
+/**********************     kirsch算子边缘检测     ***************************/
 //用kirsch算子进行边缘检测
 kirsch_amp (Image, ImageEdgeAmp)
 //进行阈值操作
@@ -88,7 +88,7 @@ dev_set_color ('red')
 dev_display (Skeleton)
 
 
-/***********************************prewitt算子边缘检测***************************/
+/**********************     prewitt算子边缘检测     ***************************/
 //用prewitt算子进行边缘提取
 prewitt_amp (Image, ImageEdgeAmp)
 //进行阈值操作
@@ -104,7 +104,7 @@ dev_display (Skeleton)
 
 
 
-/***********************************动态阈值分割***************************/
+/**********************     动态阈值分割     ***************************/
 *在图像上使用均值滤波器进行适当平滑 
 mean_image (Image, ImageMean, 59, 59)
 *动态阈值分割，提取圆区域
@@ -115,14 +115,14 @@ dev_display (Image)
 dev_display (RegionDynThresh)
 
 
-/***********************************自动阈值分割***************************/
+/**********************     自动阈值分割     ***************************/
 *自动阈值分割
 auto_threshold (Image, Regions, 5)
 *显示分割区域
 dev_display (Regions)
 
 
-/***********************************直方图谷底确定阈值分割***************************/
+/**********************         直方图谷底确定阈值分割     ***************************/
 *计算图像的灰度直方图
 gray_histo (Image, Image, AbsoluteHisto, RelativeHisto)
 histo_to_thresh (RelativeHisto, 8, MinThresh, MaxThresh)
@@ -131,7 +131,7 @@ threshold (Image, Region, MinThresh[0], MaxThresh[0])
 dev_display (Region)
 
 
-/***********************************sobel算子***************************/
+/**********************     sobel算子     ***************************/
 *边缘检测
 sobel_amp (Image, EdgeAmplitude, 'sum_abs', 3)
 *阈值分割

@@ -1,4 +1,4 @@
-/**********************开运算的计算步骤*******************/
+/**********************        开运算的计算步骤       *******************/
 *阈值分割
 threshold (GrayImage, Regions1, 0, 198)
 *以半径为11的圆进行开运算计算
@@ -15,7 +15,7 @@ dev_display (RegionOpening1)
 dev_display (RegionOpening2)
 
 
-/**********************闭运算的计算步骤*******************/
+/**********************        闭运算的计算步骤       *******************/
 *阈值分割
 threshold (GrayImage, Regions1, 25, 189)
 *以半径为11的圆进行开运算计算
@@ -32,7 +32,7 @@ dev_display (RegionClosing1)
 dev_display (RegionClosing2)
 
 
-/**********************击中与击不中代码---区域操作**********************/
+/**********************        击中与击不中代码---区域操作       *******************/
 threshold (GrayImage, Regions, 0, 44)
 *connection (Regions, ConnectedRegions)
 *skeleton (ConnectedRegions, Skeleton)
@@ -53,7 +53,7 @@ gen_circle (Circle2, Row2, Column2, 2)
 hit_or_miss (Regions, Circle, Circle2, RegionHitMiss, Row1, Column1)
 
 
-/**********************灰度开运算与闭运算**********************/
+/**********************        灰度开运算与闭运算       *******************/
 *对灰度图像进行开运算操作
 gray_opening_shape (Image, ImageOpening, 5, 5, 'octagon')
 *对灰度图像进行闭运算操作
