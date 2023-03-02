@@ -144,3 +144,11 @@ dev_display (Image)
 dev_set_color ('red')
 *显示边缘框架
 dev_display (Skeleton)
+
+
+
+/**********************     边界提取的概念---基于腐蚀     ***************/
+*将图像二值化
+threshold (Image76, Regions, 76, 255)
+*边界提取
+boundary (Regions, RegionBorder, 'inner')
