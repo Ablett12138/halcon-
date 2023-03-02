@@ -148,5 +148,5 @@ tile_images (Images,TiledImages,3, ' horizontal')
 6.归一化积相关(NCC:Normalized Cross Correlation )
 7.序贯相似性检测算法(SSDA)
 
-二、灰度模板匹配 待续。。。。
+二、其他模板匹配 待续。。。。
 
