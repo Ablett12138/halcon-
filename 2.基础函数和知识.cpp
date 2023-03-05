@@ -9,6 +9,17 @@ row=y;    //竖着的
 column=x; //横着的
 
 
+//******************************        标定处理       **************************************//
+* 生成一个十字星
+gen_cross_contour_xld(Cross, Row, Column, 12, 0.0)
+
+
+*手动选取区域
+draw_region (Region, WindowHandle)
+*手动选取矩形坐标
+draw_rectangle1 (WindowHandle, Row, Column, Row1, Column1)
+
+
 //******************************        图片读取及其初始化       **************************************//
 *图片初始处理
 read_image (Image, 'D:/机器视觉/halcon_project/字母.png')
@@ -48,6 +59,22 @@ dev_set_lut ('temperature')
 *读取图片,依次显示    J$'02'--表示前面路径后图片名称占两位
 read_image (Image, 'smd/smd_on_chip_' + J$'02')
 
+*打开自适应图片窗口
+dev_open_window_fit_image (GrayImage1, 0, 0, -1, -1, WindowHandle1)
+
+
+/*******************             图片保存           *************************/
+write_image( image , 'bmp' , 0 , 'C:/桌面/1' )
+
+*窗口保存  //带文字，region保存
+dump_window_image( image , 20000)   //图像名，窗口句柄
+write_image( image , 'bmp' , 0 , 'C:/桌面/1' )
+
+*裁剪后保存，改变尺寸
+crop_domain (ImageReduced, ImagePart)
+write_image (ImagePart, 'bmp', 0, 'D/img.bmp')
+
+
 /*******************             3幅图像对比显示           *************************/
 *3幅图像对比显示
 1.将三张图两两结合在一起
@@ -55,6 +82,8 @@ read_image (Image, 'smd/smd_on_chip_' + J$'02')
 concat_obj(GrayImage1, ImageOpening ,Images)
 concat_obj(Images , ImageTopHat, Images)
 tile_images (Images,TiledImages,3, ' horizontal')
+
+
 
 
 //////////////////////////////////////////////概念区//////////////////////////////////////////////////
