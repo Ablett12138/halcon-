@@ -31,7 +31,7 @@ dev_display_ncc_matching_results (ModelID, 'green', Row, Column, Angle, 0)
 *释放模板空间
 clear_ncc_model (ModelID)
 
-///////////////////    采用仿射变换进行标定      ///////////////////
+///////////////////    采用仿射变换进行标定--灰度模板匹配      ///////////////////
 *生成模板区域
 gen_circle (ROI_0, 169.629, 194.011, 78.8179)
 
@@ -67,4 +67,65 @@ dev_display_ncc_matching_results (ModelID, 'red', Row, Column, Angle, 0)
 *清除缓存
 clear_ncc_model (ModelID)
 
+
+/**********************          形状模板匹配             **********************/
+*阈值分割
+threshold (GrayImage, Regions, 0, 141)
+
+connection(Regions, ConnectedRegions)
+*选取区域
+select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 15000, 16000)
+*填充区域
+fill_up (SelectedRegions, RegionFillUp)
+
+*膨胀些许
+dilation_circle (RegionFillUp, RegionDilation, 1.5)
+
+*开运算去除毛刺
+opening_circle (RegionDilation, RegionOpening, 1.5)
+
+*截取区域
+reduce_domain (GrayImage, RegionOpening, ImageReduced)
+
+*创建形状模板
+create_scaled_shape_model (ImageReduced, 5, rad(0), rad(360), 'auto', 0.5, 1.6, 'auto', 'none', 'ignore_global_polarity', 40, 10, ModelID)
+
+*提取模板轮廓
+get_shape_model_contours (ModelContours, ModelID, 1)
+
+*显示模板轮廓到模板位置
+area_center (ImageReduced, Area, Row, Column)
+vector_angle_to_rigid (0, 0, 0, Row, Column, 0, HomMat2D)
+affine_trans_contour_xld (ModelContours, ContoursAffineTrans, HomMat2D)
+*显示图像
+dev_display (Image)
+dev_display (ContoursAffineTrans)
+
+*disp_continue_message (WindowHandle, 'black', 'true')
+*stop ()
+
+*读取需匹配图像
+read_image (Image1, 'D:/机器视觉/halcon_project/形状匹配测试集.png')
+rgb1_to_gray (Image1, GrayImage1)
+dev_display (GrayImage1)
+*匹配模板
+find_scaled_shape_model (GrayImage1, ModelID, rad(0), rad(360), 0.8, 1.0, 0.5, 5, 0.5, 'least_squares', 5, 0.8, Row1, Column1, Angle1, Scale1, Score1)
+
+*循环显示匹配出来的模板轮廓
+for i :=0 to |Score1|-1 by 1
+    hom_mat2d_identity (HomMat2DIdentity)
+    hom_mat2d_translate (HomMat2DIdentity, Row1[i], Column1[i], HomMat2DTranslate)
+    hom_mat2d_rotate (HomMat2DTranslate, Angle1[i], Row1[i], Column1[i], HomMat2DRotate)
+    hom_mat2d_scale (HomMat2DRotate, Scale1[i], Scale1[i], Row1[i], Column1[i], HomMat2DScale)
+    *记得采用转换前的轮廓
+    affine_trans_contour_xld (ModelContours, ContoursAffineTrans1, HomMat2DScale)
+    if (i<|Score1|)
+        disp_continue_message (WindowHandle, 'black', 'true')
+        dev_display (ContoursAffineTrans1)
+        stop ()
+    endif
+endfor
+
+clear_shape_model (ModelID)
+dev_close_window ()
 
