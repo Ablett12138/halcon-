@@ -1,6 +1,11 @@
 //////////////////////////////////////////////        代码区          //////////////////////////////////////////////////
-//********               越亮的点灰度值越大          **************************************//
+//********               概念          **************************************//
 pirnt("越亮的点灰度值越大")
+1.NumLevels=金字塔层数
+2.
+
+
+
 //*************************将面积计算结果以字符串形式显示在窗口中　（文字）　
 disp_message (WindowHandle, 'A area : ' + Area + ' pixel' , 'window', Row, Column, 'black', 'true')
 
@@ -8,11 +13,9 @@ disp_message (WindowHandle, 'A area : ' + Area + ' pixel' , 'window', Row, Colum
 row=y;    //竖着的
 column=x; //横着的
 
-
 //******************************        标定处理       **************************************//
 * 生成一个十字星
 gen_cross_contour_xld(Cross, Row, Column, 12, 0.0)
-
 
 *手动选取区域
 draw_region (Region, WindowHandle)
@@ -41,8 +44,9 @@ set_display_font (WindowHandle, 16, 'mono', 'true', 'false')
 
 *显示F5继续
 disp_continue_message (WindowHandle, 'black', 'true')
+stop()
 
-/**可选部分*/
+/**                  可选部分                     **/
 *设置填颜色为12种
 dev_set_colored (12)
 
@@ -61,7 +65,6 @@ read_image (Image, 'smd/smd_on_chip_' + J$'02')
 
 *打开自适应图片窗口
 dev_open_window_fit_image (GrayImage1, 0, 0, -1, -1, WindowHandle1)
-
 
 /*******************             图片保存           *************************/
 write_image( image , 'bmp' , 0 , 'C:/桌面/1' )
@@ -82,8 +85,6 @@ write_image (ImagePart, 'bmp', 0, 'D/img.bmp')
 concat_obj(GrayImage1, ImageOpening ,Images)
 concat_obj(Images , ImageTopHat, Images)
 tile_images (Images,TiledImages,3, ' horizontal')
-
-
 
 
 //////////////////////////////////////////////概念区//////////////////////////////////////////////////
