@@ -129,3 +129,45 @@ endfor
 clear_shape_model (ModelID)
 dev_close_window ()
 
+/**********************          形状模板匹配             **********************/
+*使用采集助手读取图像
+open_framegrabber ('File', 1, 1, 0, 0, 0, 0, 'default', -1, 'default', -1, 'default', 'rings/rings.seq', 'default', -1, 1, FGHandle)
+grab_image (ModelImage, FGHandle)
+get_image_pointer1 (ModelImage, Pointer, Type, Width, Height)
+dev_close_window ()
+dev_open_window (0, 0, Width, Height, 'white', WindowHandle)
+dev_display (ModelImage)
+* 设置显示条件
+dev_set_color ('red')
+dev_set_draw ('margin')
+dev_set_line_width (5)
+*生成模版的圆形区域并截取模版
+gen_circle (ModelROI, 251, 196, 103)
+reduce_domain (ModelImage, ModelROI, ImageROI)
+*创建基于金字塔层数的模型表示
+inspect_shape_model (ImageROI, ShapeModelImage, ShapeModelRegion, 5, 30)
+dev_display (ShapeModelRegion)
+*创建基于形状的模版
+create_shape_model (ImageROI, 'auto', 0, rad(360), 'auto', 'none', 'use_polarity', 30, 10, ModelID)
+get_shape_model_contours (ShapeModel, ModelID, 1)
+*循环识别目标图像
+for i := 1 to 7 by 1
+    *读取图像
+    grab_image (SearchImage, FGHandle)
+    dev_display (SearchImage)
+    *匹配模版
+    find_shape_model (SearchImage, ModelID, 0, rad(360), 0.6, 0, 0.55, 'least_squares', 0, 0.8, RowCheck, ColumnCheck, AngleCheck, Score)
+    *显示匹配结果
+    for j := 0 to |Score| - 1 by 1
+        vector_angle_to_rigid (0, 0, 0, RowCheck[j], ColumnCheck[j], AngleCheck[j], MovementOfObject)
+        affine_trans_contour_xld (ShapeModel, ModelAtNewPosition, MovementOfObject)
+        dev_set_color ('blue')
+        dev_display (ModelAtNewPosition)
+        dev_set_color ('red')
+        affine_trans_pixel (MovementOfObject, -120, 0, RowArrowHead, ColumnArrowHead)
+        disp_arrow (WindowHandle, RowCheck[j], ColumnCheck[j], RowArrowHead, ColumnArrowHead, 2)
+    endfor
+endfor
+*清除模版和关闭采集助手
+clear_shape_model (ModelID)
+close_framegrabber (FGHandle)

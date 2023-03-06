@@ -66,6 +66,9 @@ read_image (Image, 'smd/smd_on_chip_' + J$'02')
 *打开自适应图片窗口
 dev_open_window_fit_image (GrayImage1, 0, 0, -1, -1, WindowHandle1)
 
+*获取图像信息 --宽和高
+get_image_pointer1 (ModelImage, Pointer, Type, Width, Height)
+
 /*******************             图片保存           *************************/
 write_image( image , 'bmp' , 0 , 'C:/桌面/1' )
 
@@ -213,11 +216,18 @@ tile_images (Images,TiledImages,3, ' horizontal')
     4.最后将所有偶数行和列去除。
     5.向下采样，后向上采样后，丢失了很多细节。
 (2)拉普拉斯金字塔：
-    1.高斯金字塔分别向上和向下采样。
+    1.高斯金字塔分别向下和向上采样。
     2.同层分辨率相减，多层叠加起来就是拉普拉斯金字塔。
     3.用高斯金字塔的每一层图像减去其上一层图像上采样并高斯卷积之后的预测图像，
       得到一系列的差值图像，即为拉普拉斯金字塔分解图像。
-
+(3)图像融合：    --适用双目相机的图片拼接
+    1.函数调用：
+    (1)根据金字塔层数和对比度检查要生成的模板是否合适
+    inspect_shape_model(lmage : Modellmages, ModelRegions : NumLevels,Contrast : )
+    (2)使用图像创建形状匹配模型
+    create_shape_model(Template : : NumLevels, AngleStart, AngleExtent,AngleStep,Optimization,Metric, Contrast, MinContrast : ModellD)
+    (3)获取形状模板的轮廓
+    get_shape_contours( : ModelContours: ModellD,Level; )
 
 
 
