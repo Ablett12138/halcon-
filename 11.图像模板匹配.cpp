@@ -171,3 +171,4 @@ endfor
 *清除模版和关闭采集助手
 clear_shape_model (ModelID)
 close_framegrabber (FGHandle)
+
