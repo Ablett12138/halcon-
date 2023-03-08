@@ -59,6 +59,8 @@ dev_set_line_width (2)
 *输出伪彩色图像
 dev_set_lut ('temperature')
 
+*激活已创建的窗口
+dev_set_window (WindowHandle1)
 
 *读取图片,依次显示    J$'02'--表示前面路径后图片名称占两位
 read_image (Image, 'smd/smd_on_chip_' + J$'02')
