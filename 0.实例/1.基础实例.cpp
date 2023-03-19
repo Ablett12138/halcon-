@@ -1,4 +1,4 @@
-/**********************     二维码矫正*********************************************/
+/**********************     二维码矫正--图像的投影变换实例 *********************************************/
 dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)
 dev_set_color ('red')
 dev_set_line_width (2)
@@ -11,7 +11,7 @@ hom_vector_to_proj_hom_mat2d (X, Y, [1,1,1,1], [75,360,360,75], [110,110,360,360
 projective_trans_image (Image, Image_rectified, HomMat2D, 'bilinear', 'false', 'false')
 
 
-/**********************     仿射变换--位姿变换      ************************************/
+/**********************     仿射变换--位姿变换--已知角度和位置参数的变换      ************************************/
 threshold (GrayImage, Regions, 200, 255)
 area_center (Regions, Area, Row, Column)
 hom_mat2d_identity (HomMat2DIdentity)
